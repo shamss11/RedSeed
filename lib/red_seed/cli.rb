@@ -2,6 +2,7 @@
 
 require "thor"
 require "terminal-table"
+require "rbconfig"
 
 module RedSeed
   # CLI defines the commands and user interface for the RedSeed tool
@@ -55,6 +56,9 @@ module RedSeed
       filename = "#{dirname}/#{neighborhood.downcase.tr(' ', '_')}_map.html"
       File.write(filename, ReportGenerator.generate_html_map(result))
       say "Interactive map generated: #{filename}", :green
+
+      # Automatically open on macOS
+      system("open", filename) if RbConfig::CONFIG["host_os"] =~ /darwin/
     end
 
     private
