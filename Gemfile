@@ -1,5 +1,6 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gem 'thor'
-gem 'faraday'
-gem 'terminal-table'
+gem "thor"
+gem "faraday"
+gem "terminal-table"
+gem "rubocop"

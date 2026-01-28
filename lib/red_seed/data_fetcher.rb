@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 module RedSeed
+  # DataFetcher handles fetching food asset data from Vancouver Open Data API
   class DataFetcher
-    BASE_URL = "https://opendata.vancouver.ca/api/explore/v2.1/catalog/datasets"
-    
+    BASE_URL = "https://opendata.vancouver.ca/api/explore/v2.1/catalog/datasets".freeze
+
     DATASETS = {
       meals: "free-and-low-cost-food-programs",
       gardens: "community-gardens-and-food-trees"
@@ -10,21 +13,17 @@ module RedSeed
     def self.fetch_data(dataset_type)
       dataset_id = DATASETS[dataset_type]
       url = "#{BASE_URL}/#{dataset_id}/records"
-      
+
       conn = Faraday.new(url: url) do |f|
         f.request :url_encoded
         f.adapter Faraday.default_adapter
       end
 
-      response = conn.get do |req|
-        req.params['limit'] = 100
-      end
+      response = conn.get { |req| req.params["limit"] = 100 }
 
-      if response.success?
-        JSON.parse(response.body)["results"]
-      else
-        raise "Failed to fetch #{dataset_type} from Vancouver Open Data: #{response.status}"
-      end
+      return JSON.parse(response.body)["results"] if response.success?
+
+      fail "Failed to fetch #{dataset_type} from Vancouver Open Data: #{response.status}"
     end
 
     def self.fetch_all
