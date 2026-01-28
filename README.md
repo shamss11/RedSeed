@@ -64,17 +64,23 @@ Every day, residents in Vancouver rely on local food assets. When neighborhoods 
 
 ✨ **Key Features**
 
-📡 **Real-Time Data Extraction**
+📡 **Real-Time Data Extraction**  
 Fetches the latest records directly from the City of Vancouver's `free-and-low-cost-food-programs` and `community-gardens` datasets.
 
-📈 **Intelligent Scoring Engine**
+📊 **Interactive Mapping**  
+Generates a professional Leaflet.js HTML map for any neighborhood. On macOS, the report opens automatically in your browser.
+
+⚖️ **Comparison Engine**  
+Pit two neighborhoods against each other to identify resource gaps and food security disparities.
+
+📈 **Intelligent Scoring Engine**  
 Calculates a weighted score based on the impact of different food assets. Meal programs offer immediate relief (5pts), while gardens provide long-term sustainability (2pts).
 
-🎨 **Clean Terminal UI**
-Uses `terminal-table` for high-contrast, professional data presentation in your shell.
+⚡ **Performance Cache**  
+Includes a smart 24-hour local caching system to ensure instant results while respecting the City's API resource limits.
 
-🔗 **Extensible Architecture**
-Modular Ruby design makes it easy to add new datasets (like food vendors or farmers markets) by simply updating the `DataFetcher`.
+🧪 **Robust Test Suite**  
+Fully integrated RSpec suite with unit and integration tests to ensure data integrity and scoring accuracy.
 
 ---
 
@@ -82,12 +88,14 @@ Modular Ruby design makes it easy to add new datasets (like food vendors or farm
 
 **Languages**
 - **Ruby**: Core logic, API orchestration, and CLI engine.
-- **JSON**: Data interchange format for Open Data API results.
+- **HTML/JS**: Leaflet.js integration for interactive mapping.
+- **JSON**: Data interchange format for Open Data API results and local caching.
 
 **Frameworks & Libraries**
 - **Thor**: High-performance Ruby CLI framework.
 - **Faraday**: Resilient HTTP client for API requests.
 - **Terminal-Table**: ASCII table generator for console output.
+- **RSpec**: Behavior-driven development framework for testing.
 
 ---
 
@@ -122,16 +130,40 @@ Modular Ruby design makes it easy to add new datasets (like food vendors or farm
 
 📖 **Usage Guide**
 
-### 1. Analyze a Neighborhood
+### 1. Identify Supported Areas
+List all official Vancouver neighborhoods parsed by our engine.
+```bash
+bundle exec bin/urban neighborhoods
+```
+
+### 2. Analyze a Neighborhood
 See the live score and a breakdown of every food asset in a specific area.
 ```bash
 bundle exec bin/urban analyze "Kitsilano"
 ```
 
-### 2. Export a Professional Report
-Saves the analysis results to a styled Markdown file in the `reports/` folder.
+### 3. Compare Two Neighborhoods
+Generate a side-by-side gap analysis between two areas.
+```bash
+bundle exec bin/urban compare "Kitsilano" "Mount Pleasant"
+```
+
+### 4. Create an Interactive Map
+Generates a styled Leaflet.js map in the `reports/` folder. (Opens automatically on macOS).
+```bash
+bundle exec bin/urban map "West End"
+```
+
+### 5. Export a Professional Report
+Saves the analysis results to a styled Markdown file for stakeholders.
 ```bash
 bundle exec bin/urban export "Downtown"
+```
+
+### 6. Run the Test Suite
+Verify the logic and API connectivity.
+```bash
+bundle exec rspec
 ```
 
 ---
@@ -147,7 +179,7 @@ bundle exec bin/urban export "Downtown"
 ### 🗺️ Data Coverage
 RedSeed currently supports all 22 official local areas within the **City of Vancouver**:
 
-Arbutus Ridge • Downtown • Dunbar-Southlands • Fairview • Grandview-Woodland • Hastings-Sunrise • Kensington-Cedar Cottage • Killarney • Kitsilano • Marpole • Mount Pleasant • Oakridge • Renfrew-Collingwood • Riley Park • Shaughnessy • South Cambie • Strathcona • Sunset • Victoria-Fraserview • West End • West Point Grey
+Arbutus Ridge • Downtown • Dunbar Southlands • Fairview • Grandview Woodland • Hastings Sunrise • Kensington Cedar Cottage • Killarney • Kitsilano • Marpole • Mount Pleasant • Oakridge • Renfrew Collingwood • Riley Park • Shaughnessy • South Cambie • Strathcona • Sunset • Victoria Fraserview • West End • West Point Grey
 
 ---
 
