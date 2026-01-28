@@ -1,0 +1,27 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    base64 (0.3.0)
+    faraday (2.8.1)
+      base64
+      faraday-net_http (>= 2.0, < 3.1)
+      ruby2_keywords (>= 0.0.4)
+    faraday-net_http (3.0.2)
+    ruby2_keywords (0.0.5)
+    terminal-table (4.0.0)
+      unicode-display_width (>= 1.1.1, < 4)
+    thor (1.5.0)
+    unicode-display_width (3.2.0)
+      unicode-emoji (~> 4.1)
+    unicode-emoji (4.2.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  faraday
+  terminal-table
+  thor
+
+BUNDLED WITH
+   1.17.2
