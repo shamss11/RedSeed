@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RedSeed Map: West end</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>#map { height: 600px; width: 100%; border-radius: 12px; }</style>
+</head>
+<body style="font-family: sans-serif; padding: 20px; background: #111; color: white;">
+  <h1>RedSeed Interactive Map: West end</h1>
+  <div id="map"></div>
+  <script>
+    const map = L.map('map').setView([49.25, -123.12], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    const pins = [
+      { name: "Barclay Heritage Square", lat: 49.28738755, lon: -123.13284501, type: "Community Garden" },
+      { name: "Nicholson Towers", lat: 49.2828118, lon: -123.1279113, type: "Community Garden" },
+      { name: "Mole Hill Community Gardens", lat: 49.282056, lon: -123.130556, type: "Community Garden" },
+      { name: "Rooted for Life Garden", lat: 49.287355, lon: -123.132872, type: "Community Garden" }
+    ];
+    pins.forEach(p => {
+      L.marker([p.lat, p.lon]).addTo(map)
+        .bindPopup(`<b>${p.name}</b><br>${p.type}`);
+    });
+    if (pins.length > 0) {
+      const bounds = L.latLngBounds(pins.map(p => [p.lat, p.lon]));
+      map.fitBounds(bounds);
+    }
+  </script>
+</body>
+</html>

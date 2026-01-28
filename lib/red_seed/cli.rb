@@ -7,12 +7,26 @@ require "rbconfig"
 module RedSeed
   # CLI defines the commands and user interface for the RedSeed tool
   class CLI < Thor
+    def self.exit_on_failure?
+      true
+    end
+
     desc "analyze NEIGHBORHOOD", "Calculate food security score for a given neighborhood"
     def analyze(neighborhood)
       result = perform_analysis(neighborhood)
       return unless result
 
       display_results(result)
+    end
+
+    desc "neighborhoods", "List all supported neighborhoods in Vancouver"
+    def neighborhoods
+      say "Fetching available neighborhoods...", :yellow
+      data = DataFetcher.fetch_all
+      analyzer = Analyzer.new(data)
+
+      say "\nSupported Neighborhoods:", :bold
+      analyzer.neighborhoods.each { |n| say "- #{n}", :cyan }
     end
 
     desc "export NEIGHBORHOOD", "Export analysis results to a markdown file in reports/"
@@ -71,7 +85,9 @@ module RedSeed
 
       if result[:assets].empty?
         say "No data found for neighborhood: #{neighborhood}", :red
-        say "Available neighborhoods include: #{analyzer.neighborhoods.first(10).join(', ')}...", :cyan
+        say "\nNote: RedSeed currently focuses on the City of Vancouver.", :yellow
+        say "Available neighborhoods include:", :bold
+        analyzer.neighborhoods.each { |name| say "  • #{name}", :cyan }
         return nil
       end
       result
@@ -81,47 +97,12 @@ module RedSeed
     end
 
     def display_results(result)
-      table = ::Terminal::Table.new do |t|
-        t.title = "RedSeed Analysis: #{result[:neighborhood]}"
-        t.headings = ["Asset Name", "Type", "Points", "Recommendation"]
-        add_asset_rows(t, result[:assets])
-        t.add_separator
-        t.add_row [{ value: "Total Score: #{result[:score]}", colspan: 4, alignment: :center }]
-      end
-      puts table
+      puts TableBuilder.build_analysis_table(result)
       check_low_score(result[:score])
     end
 
     def display_comparison(res1, res2)
-      table = ::Terminal::Table.new do |t|
-        t.title = "RedSeed Comparison: #{res1[:neighborhood]} vs #{res2[:neighborhood]}"
-        t.headings = ["Metric", res1[:neighborhood], res2[:neighborhood], "Diff"]
-        add_comparison_rows(t, res1, res2)
-      end
-      puts table
-    end
-
-    def add_comparison_rows(table, r1, r2)
-      table.add_row ["Total Score", r1[:score], r2[:score], r1[:score] - r2[:score]]
-      table.add_row ["Asset Count", r1[:assets_count], r2[:assets_count],
-                     r1[:assets_count] - r2[:assets_count]]
-      add_asset_type_comparison_rows(table, r1, r2)
-    end
-
-    def add_asset_type_comparison_rows(table, r1, r2)
-      table.add_row ["Gardens", r1[:stats][:gardens], r2[:stats][:gardens],
-                     r1[:stats][:gardens] - r2[:stats][:gardens]]
-      table.add_row ["Meal Programs", r1[:stats][:meals], r2[:stats][:meals],
-                     r1[:stats][:meals] - r2[:stats][:meals]]
-    end
-
-    def add_asset_rows(table, assets)
-      assets.each do |asset|
-        name = asset["program_name"] || asset["name"] || "Unknown"
-        points = Analyzer::SCORING_RULES[asset["asset_type"]] || 0
-        rec = points < 5 ? "Potential site for new community garden" : "N/A"
-        table.add_row [name, asset["asset_type"], points, rec]
-      end
+      puts TableBuilder.build_comparison_table(res1, res2)
     end
 
     def check_low_score(score)

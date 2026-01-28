@@ -144,6 +144,18 @@ bundle exec bin/urban export "Downtown"
 | 🟡 **Warning** | 10-30 | Consider expanding community garden sites |
 | 🔴 **Critical** | < 10 | **Immediate action needed for meal programs!** |
 
+### 🗺️ Data Coverage
+RedSeed currently supports all 22 official local areas within the **City of Vancouver**:
+
+Arbutus Ridge • Downtown • Dunbar-Southlands • Fairview • Grandview-Woodland • Hastings-Sunrise • Kensington-Cedar Cottage • Killarney • Kitsilano • Marpole • Mount Pleasant • Oakridge • Renfrew-Collingwood • Riley Park • Shaughnessy • South Cambie • Strathcona • Sunset • Victoria-Fraserview • West End • West Point Grey
+
+---
+
+<p align="center">
+  <b>Built with ❤️ for a more food-secure Vancouver</b><br>
+  <i>Data provided by the City of Vancouver Open Data Portal</i>
+</p>
+
 ---
 
 🔌 **Data Sources**
@@ -163,6 +175,5 @@ This project is open source and available under the **MIT License**.
 
 Made with 🍎 by [shamss11](https://github.com/shamss11)
 
-**Stop guessing. Start planting.**
 
 </div>

@@ -17,9 +17,10 @@ module RedSeed
 
       # The API uses different keys for neighborhoods across datasets
       assets = @data.select do |item|
-        neighborhood = item["local_areas"] || item["local_area"] ||
-                       item["neighborhood_name"] || item["geo_local_area"]
-        neighborhood&.downcase&.include?(target_name)
+        raw_name = item["local_areas"] || item["local_area"] ||
+                   item["neighborhood_name"] || item["geo_local_area"]
+        neighborhood = raw_name&.tr("-", " ")
+        neighborhood&.downcase&.include?(target_name.tr("-", " "))
       end
 
       {
@@ -33,8 +34,9 @@ module RedSeed
 
     def neighborhoods
       @data.map do |item|
-        item["local_areas"] || item["local_area"] ||
-          item["neighborhood_name"] || item["geo_local_area"]
+        raw = item["local_areas"] || item["local_area"] ||
+              item["neighborhood_name"] || item["geo_local_area"]
+        raw&.tr("-", " ")
       end.compact.uniq.sort
     end
 
