@@ -83,17 +83,26 @@ module RedSeed
       analyzer = Analyzer.new(data)
       result = analyzer.analyze_neighborhood(neighborhood)
 
-      if result[:assets].empty?
-        say "No data found for neighborhood: #{neighborhood}", :red
-        say "\nNote: RedSeed currently focuses on the City of Vancouver.", :yellow
-        say "Available neighborhoods include:", :bold
-        analyzer.neighborhoods.each { |name| say "  • #{name}", :cyan }
-        return nil
-      end
-      result
+      return result unless result[:assets].empty?
+
+      handle_missing_neighborhood(neighborhood, analyzer)
+      nil
     rescue StandardError => e
       say "Error: #{e.message}", :red
       nil
+    end
+
+    def handle_missing_neighborhood(neighborhood, analyzer)
+      say "No data found for neighborhood: #{neighborhood}", :red
+      best_match = FuzzyMatcher.find_best_match(neighborhood, analyzer.neighborhoods)
+
+      if best_match && best_match[:distance] <= 3
+        say "\nDid you mean: \"#{best_match[:name]}\"?", :yellow
+      else
+        say "\nNote: RedSeed currently focuses on the City of Vancouver.", :yellow
+        say "Available neighborhoods include:", :bold
+        analyzer.neighborhoods.each { |name| say "  • #{name}", :cyan }
+      end
     end
 
     def display_results(result)
