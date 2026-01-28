@@ -1,0 +1,10 @@
+# Ignore gems and vendor folders
+vendor/
+.bundle/
+Gemfile.lock
+
+# Ignore generated reports
+reports/*.md
+
+# Ignore OS files
+.DS_Store
