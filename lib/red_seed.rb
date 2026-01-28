@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+require_relative "red_seed/version"
 require "faraday"
 require "json"
 require "thor"

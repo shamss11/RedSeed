@@ -1,10 +1,9 @@
-# Ignore gems and vendor folders
+bin/vendor
+reports/*.md
+reports/*.html
+.red_seed_cache.json
+*.gem
 vendor/
 .bundle/
 Gemfile.lock
-
-# Ignore generated reports
-reports/*.md
-
-# Ignore OS files
 .DS_Store

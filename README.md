@@ -123,8 +123,17 @@ Fully integrated RSpec suite with unit and integration tests to ensure data inte
 
 3. **Verify Installation**
    ```bash
-   bundle exec bin/urban --help
+   bundle exec exe/urban --help
    ```
+
+**Global Installation (Optional)**
+
+If you want to run `urban` from anywhere on your Mac:
+```bash
+gem build red_seed.gemspec
+gem install ./red_seed-0.1.0.gem --user-install
+```
+*Note: You may need to add the gem bin path to your shell's PATH.*
 
 ---
 
