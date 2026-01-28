@@ -26,7 +26,8 @@ module RedSeed
         neighborhood: target_name.capitalize,
         score: calculate_score(assets),
         assets_count: assets.count,
-        assets: assets
+        assets: assets,
+        stats: calculate_stats(assets)
       }
     end
 
@@ -43,6 +44,13 @@ module RedSeed
       assets.reduce(0) do |sum, asset|
         sum + (SCORING_RULES[asset["asset_type"]] || 0)
       end
+    end
+
+    def calculate_stats(assets)
+      {
+        gardens: assets.count { |a| a["asset_type"] == "Community Garden" },
+        meals: assets.count { |a| a["asset_type"] == "Free Meal Program" }
+      }
     end
   end
 end

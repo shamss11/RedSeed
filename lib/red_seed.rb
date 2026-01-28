@@ -5,6 +5,7 @@ require "terminal-table"
 
 require_relative "red_seed/data_fetcher"
 require_relative "red_seed/analyzer"
+require_relative "red_seed/report_generator"
 require_relative "red_seed/cli"
 
 module RedSeed
