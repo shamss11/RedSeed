@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RedSeed Map: Kitsilano</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>#map { height: 600px; width: 100%; border-radius: 12px; }</style>
+</head>
+<body style="font-family: sans-serif; padding: 20px; background: #111; color: white;">
+  <h1>RedSeed Interactive Map: Kitsilano</h1>
+  <div id="map"></div>
+  <script>
+    const map = L.map('map').setView([49.25, -123.12], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    const pins = [
+      { name: "Cypress Community Garden", lat: 49.2662772, lon: -123.1456636, type: "Community Garden" },
+      { name: "Delamont Park", lat: 49.2658197, lon: -123.152619, type: "Community Garden" },
+      { name: "Kitsilano Community Garden", lat: 49.26661593, lon: -123.15102375, type: "Community Garden" },
+      { name: "4th and MacDonald", lat: 49.268683, lon: -123.167928, type: "Community Garden" },
+      { name: "Kits Village Collaborative Garden", lat: 49.273327, lon: -123.1514277, type: "Community Garden" },
+      { name: "Kitsilano Neighbourhood House", lat: 49.2686566, lon: -123.1852422, type: "Community Garden" },
+      { name: "Maple Community Garden", lat: 49.2663131, lon: -123.148045, type: "Community Garden" }
+    ];
+    pins.forEach(p => {
+      L.marker([p.lat, p.lon]).addTo(map)
+        .bindPopup(`<b>${p.name}</b><br>${p.type}`);
+    });
+    if (pins.length > 0) {
+      const bounds = L.latLngBounds(pins.map(p => [p.lat, p.lon]));
+      map.fitBounds(bounds);
+    }
+  </script>
+</body>
+</html>

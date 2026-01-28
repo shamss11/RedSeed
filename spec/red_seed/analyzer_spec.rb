@@ -51,7 +51,7 @@ RSpec.describe RedSeed::Analyzer do
 
   describe "#neighborhoods" do
     it "returns a sorted list of unique neighborhoods" do
-      expect(analyzer.neighborhoods).to eq(%w[Downtown Kitsilano])
+      expect(analyzer.neighborhoods).to eq(%w(Downtown Kitsilano))
     end
   end
 end

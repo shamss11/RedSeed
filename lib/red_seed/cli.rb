@@ -44,6 +44,19 @@ module RedSeed
       display_comparison(res1, res2)
     end
 
+    desc "map NEIGHBORHOOD", "Generate an interactive HTML map for a neighborhood"
+    def map(neighborhood)
+      result = perform_analysis(neighborhood)
+      return unless result
+
+      dirname = "reports"
+      Dir.mkdir(dirname) unless File.exist?(dirname)
+
+      filename = "#{dirname}/#{neighborhood.downcase.tr(' ', '_')}_map.html"
+      File.write(filename, ReportGenerator.generate_html_map(result))
+      say "Interactive map generated: #{filename}", :green
+    end
+
     private
 
     def perform_analysis(neighborhood)

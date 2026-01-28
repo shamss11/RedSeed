@@ -23,5 +23,59 @@ module RedSeed
       rec = points < 5 ? "Potential site for new community garden" : "N/A"
       "| #{name} | #{asset['asset_type']} | #{points} | #{rec} |"
     end
+
+    def self.generate_html_map(result)
+      pins = result[:assets].map do |a|
+        lat, lon = extract_coords(a)
+        next unless lat && lon
+
+        "{ name: \"#{a['program_name'] || a['name']}\", lat: #{lat}, lon: #{lon}, type: \"#{a['asset_type']}\" }"
+      end.compact.join(",\n      ")
+
+      map_template(result[:neighborhood], pins)
+    end
+
+    def self.extract_coords(asset)
+      coords = asset["geo_point_2d"] || asset.dig("geom", "geometry", "coordinates")
+      return [nil, nil] unless coords
+
+      # API formats vary: geo_point_2d is {lat, lon}, geom is [lon, lat]
+      coords.is_a?(Hash) ? [coords["lat"], coords["lon"]] : [coords[1], coords[0]]
+    end
+
+    def self.map_template(name, pins)
+      <<~HTML
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>RedSeed Map: #{name}</title>
+          <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+          <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+          <style>#map { height: 600px; width: 100%; border-radius: 12px; }</style>
+        </head>
+        <body style="font-family: sans-serif; padding: 20px; background: #111; color: white;">
+          <h1>RedSeed Interactive Map: #{name}</h1>
+          <div id="map"></div>
+          <script>
+            const map = L.map('map').setView([49.25, -123.12], 12);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            const pins = [
+              #{pins}
+            ];
+            pins.forEach(p => {
+              L.marker([p.lat, p.lon]).addTo(map)
+                .bindPopup(`<b>${p.name}</b><br>${p.type}`);
+            });
+            if (pins.length > 0) {
+              const bounds = L.latLngBounds(pins.map(p => [p.lat, p.lon]));
+              map.fitBounds(bounds);
+            }
+          </script>
+        </body>
+        </html>
+      HTML
+    end
+
+    private_class_method :extract_coords, :map_template
   end
 end
