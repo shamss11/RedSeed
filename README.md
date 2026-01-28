@@ -5,7 +5,20 @@
 
 Empowering city planners and social workers with actionable food asset insights—before neighborhoods fall behind.
 
-`Ruby` `Thor` `Faraday` `Terminal-Table` `Vancouver Open Data API`
+<p>
+  <img src="https://img.shields.io/badge/RUBY-CC342D?style=for-the-badge&logo=ruby&logoColor=white" alt="Ruby" />
+  <img src="https://img.shields.io/badge/CLI-THOR-blue?style=for-the-badge&logo=ruby&logoColor=white" alt="Thor" />
+  <img src="https://img.shields.io/badge/API-FARADAY-brightgreen?style=for-the-badge" alt="Faraday" />
+  <img src="https://img.shields.io/badge/DATA-VANCOUVER_OPEN_DATA-orange?style=for-the-badge" alt="Data" />
+</p>
+
+<p>
+  <img src="https://img.shields.io/badge/LICENSE-MIT-gray?style=for-the-badge" alt="License" />
+</p>
+
+<br />
+
+<i>Building the future of community wellness through open data and agricultural intelligence.</i>
 
 ---
 
@@ -67,14 +80,14 @@ Modular Ruby design makes it easy to add new datasets (like food vendors or farm
 
 🛠 **Tech Stack**
 
-| Layer | Technology | Purpose |
-| :--- | :--- | :--- |
-| **Language** | Ruby | Modern, expressive language for fast CLI development |
-| **CLI Framework** | Thor | Powerful toolkit for building high-quality CLI interfaces |
-| **HTTP Client** | Faraday | Robust HTTP client for reliable API communication |
-| **Data Format** | JSON | Standard parsing of Open Data records |
-| **Formatting** | Terminal-Table | Generates professional tables directly in the terminal |
-| **Source Control** | Git | Versioning and collaboration |
+**Languages**
+- **Ruby**: Core logic, API orchestration, and CLI engine.
+- **JSON**: Data interchange format for Open Data API results.
+
+**Frameworks & Libraries**
+- **Thor**: High-performance Ruby CLI framework.
+- **Faraday**: Resilient HTTP client for API requests.
+- **Terminal-Table**: ASCII table generator for console output.
 
 ---
 
@@ -89,17 +102,21 @@ Modular Ruby design makes it easy to add new datasets (like food vendors or farm
 
 **Installation**
 
-```bash
-# 1. Clone the repository
-git clone https://github.com/shamss11/RedSeed.git
-cd RedSeed
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/shamss11/RedSeed.git
+   cd RedSeed
+   ```
 
-# 2. Install dependencies
-bundle install --path vendor/bundle
+2. **Install Dependencies**
+   ```bash
+   bundle install --path vendor/bundle
+   ```
 
-# 3. Verify installation
-bundle exec bin/urban --help
-```
+3. **Verify Installation**
+   ```bash
+   bundle exec bin/urban --help
+   ```
 
 ---
 
@@ -131,7 +148,7 @@ bundle exec bin/urban export "Downtown"
 
 🔌 **Data Sources**
 
-RedSeed utilizes the [Vancouver Open Data Portal](https://opendata.vancouver.ca/) via their REST API. **No API Key is required** for development.
+RedSeed utilizes the [Vancouver Open Data Portal](https://opendata.vancouver.ca/) via their REST API.
 
 *   **Dataset 1**: `free-and-low-cost-food-programs`
 *   **Dataset 2**: `community-gardens-and-food-trees`
