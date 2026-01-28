@@ -1,11 +1,15 @@
-# RedSeed 🍎
-### RedSeed
+<div align="center">
 
-**Neighborhood Food Security Intelligence**
+# RedSeed 🍎
+### Neighborhood Food Security Intelligence
 
 Empowering city planners and social workers with actionable food asset insights—before neighborhoods fall behind.
 
 `Ruby` `Thor` `Faraday` `Terminal-Table` `Vancouver Open Data API`
+
+---
+
+</div>
 
 📑 **Table of Contents**
 
@@ -134,10 +138,14 @@ RedSeed utilizes the [Vancouver Open Data Portal](https://opendata.vancouver.ca/
 
 ---
 
+<div align="center">
+
 📜 **License**
 
 This project is open source and available under the **MIT License**.
 
-Made with 🍎 by shamss11
+Made with 🍎 by [shamss11](https://github.com/shamss11)
 
 **Stop guessing. Start planting.**
+
+</div>
