@@ -40,6 +40,18 @@ module RedSeed
       end.compact.uniq.sort
     end
 
+    def city_stats
+      all_neighborhoods = neighborhoods
+      results = all_neighborhoods.map { |name| analyze_neighborhood(name) }
+
+      {
+        total_neighborhoods: all_neighborhoods.count,
+        total_assets: @data.count,
+        average_score: results.map { |r| r[:score] }.sum / all_neighborhoods.count.to_f,
+        ranked: results.sort_by { |r| r[:score] }.reverse
+      }
+    end
+
     private
 
     def calculate_score(assets)

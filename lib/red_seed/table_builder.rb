@@ -23,6 +23,28 @@ module RedSeed
       end
     end
 
+    def self.build_city_stats_table(stats)
+      ::Terminal::Table.new do |t|
+        t.title = "City-Wide Food Security Overview"
+        t.headings = %w(Neighborhood Score Status)
+        stats[:ranked].each do |r|
+          t.add_row [r[:neighborhood], r[:score], score_status(r[:score])]
+        end
+        t.add_separator
+        t.add_row [{ value: "City Average: #{stats[:average_score].round(2)}", colspan: 3, alignment: :center }]
+      end
+    end
+
+    def self.score_status(score)
+      if score >= 30
+        "Healthy"
+      elsif score >= 10
+        "Warning"
+      else
+        "Critical"
+      end
+    end
+
     def self.add_asset_rows(table, assets)
       assets.each do |asset|
         name = asset["program_name"] || asset["name"] || "Unknown"

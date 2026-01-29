@@ -19,6 +19,16 @@ module RedSeed
       display_results(result)
     end
 
+    desc "stats", "Show city-wide food security statistics and rankings"
+    def stats
+      say "Analyzing all neighborhoods... this may take a moment", :yellow
+      data = DataFetcher.fetch_all
+      analyzer = Analyzer.new(data)
+      stats = analyzer.city_stats
+
+      puts TableBuilder.build_city_stats_table(stats)
+    end
+
     desc "neighborhoods", "List all supported neighborhoods in Vancouver"
     def neighborhoods
       say "Fetching available neighborhoods...", :yellow
